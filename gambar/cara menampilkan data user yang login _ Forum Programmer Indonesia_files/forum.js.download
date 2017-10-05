@@ -1,0 +1,110 @@
+/*|--------------------------------------------------------------------
+  | Like Hover effect
+  |--------------------------------------------------------------------
+*/
+$(document).on('mouseenter', '.like', function(){
+  $(this).find('img').attr('src', '/assets/images/coto-fill.png');
+  $(this).next('.total_like').find('.like_info').html('kasih coto, menarik!').show();
+}).on('mouseleave', '.like', function(){
+  $(this).find('img').attr('src', '/assets/images/coto.png');
+  $(this).next('.total_like').find('.like_info').html('kasih coto, menarik!').hide();
+});
+
+//unlike
+$(document).on('mouseenter', '.unlike', function(){
+  $(this).find('img').attr('src', '/assets/images/coto.png');
+  $(this).next('.total_like').find('.like_info').html('tarik coto').show();
+}).on('mouseleave', '.unlike', function(){
+  $(this).find('img').attr('src', '/assets/images/coto-fill.png');
+  $(this).next('.total_like').find('.like_info').html('tarik coto').hide();
+});
+
+  $.ajaxSetup({
+     headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+  });
+
+/*|--------------------------------------------------------------------
+  | like
+  |--------------------------------------------------------------------
+*/
+$(document).on('click touchstart', '.like', function(){
+  var _this = $(this);
+  var _url  = "/like/"+ _this.attr('data-type')
+              + "/" + _this.attr('data-model-id')
+              + '/' +_this.attr('data-target-user');
+
+
+  $.get(_url ,function(data){
+    if(data == 'OWN POST'){
+      console.log('cant own post');
+      _this.next('.total_like').find('.like_warning').show();
+    }else{
+
+      _this.attr('class', 'unlike');
+      _this.find('img').attr('src', '/assets/images/coto-fill.png');
+
+      var _targetSpan = _this.parents('.like_wrapper').find('.total_like span');
+      _targetSpan.html( parseInt( _targetSpan.html()) + 1 );
+    }
+
+  });
+
+});
+
+/*|--------------------------------------------------------------------
+  | unlike
+  |--------------------------------------------------------------------
+*/
+$(document).on('click touchstart', '.unlike', function(){
+  var _this = $(this);
+  var _url  = "/unlike/"+ _this.attr('data-type')
+              + "/" + _this.attr('data-model-id')
+              + '/' +_this.attr('data-target-user');
+
+  $.get(_url ,function(data){ console.log(data); });
+
+  _this.attr('class', 'like');
+  _this.find('img').attr('src', '/assets/images/coto.png');
+
+  var _targetSpan = _this.parents('.like_wrapper').find('.total_like span');
+  _targetSpan.html( parseInt( _targetSpan.html()) - 1 );
+
+});
+
+
+/*|--------------------------------------------------------------------
+  | mark best answer
+  |--------------------------------------------------------------------
+*/
+$(document).on('click touchstart', '.mark_best', function(){
+
+  var _this = $(this);
+  var _url  = "/mark_answer/"+ $(this).attr('data-answer-id');
+
+  $.get(_url ,function(data){
+    if(data == 'first'){
+
+      swal("berhasil!", "jawaban terbaik diplih", "success");
+      _this.parents('.each-comment').addClass('each-comment-best');
+      _this.html('batalkan jawaban terbaik');
+    }
+    if(data == 'cancel'){
+      swal("berhasil!", "jawaban terbaik ditarik", "success");
+      _this.parents('.each-comment').removeClass('each-comment-best');
+      _this.html('pilih jadi jawaban terbaik');
+    }
+    if(data == 'change'){
+
+      swal("berhasil!", "jawaban terbaik berhasil diubah", "success");
+
+      $('.each-comment').filter('.each-comment-best').find('.mark_best')
+                        .html('pilih jadi jawaban terbaik');
+      $('.each-comment').removeClass('each-comment-best');
+
+      _this.parents('.each-comment').addClass('each-comment-best');
+      _this.html('batalkan jawaban terbaik');
+    }
+  });
+
+  //move answer to top on ajax
+});

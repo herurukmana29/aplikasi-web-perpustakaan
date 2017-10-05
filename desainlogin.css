@@ -1,0 +1,65 @@
+.header{
+	height: 120px;
+	background:#009900;
+    color:white;
+    margin-top:-8px;
+    margin-left:-10px;
+    margin-right:-10px;
+}
+.judul{
+	float: left;
+	font-size: 70px;
+	font-family:impact;
+    padding-top:25px;
+    padding-left:30px;
+}
+.tabel{
+	float: right;
+	margin-top: 22px;
+	margin-right:30px;
+    font-size:20px;
+    font-family:Arial, Helvetica, sans-serif;
+}
+.daftar{
+	border:;
+	float: right;
+	margin-top: 50px;
+	margin-right: 120px;
+	line-height: 40px;
+}
+.ip{
+	height: 20px;
+}
+.kr{
+	width: 100px;
+	height: 30px;
+	text-align: center;
+}
+.slogan{
+	float: left;
+	font-size: 25px;
+	border:;
+	margin-left: 100px;
+	margin-top: 50px;
+}
+.bawah{
+	border:;
+	margin-top: 520px;
+	height:75px;
+    color:#009900;
+    padding-left:50px;
+    background-color:white;
+}
+.fhoto{
+	width: 100px;
+	height: 100px;
+	border:1px solid;
+	background: black;
+}
+.anggota{
+	background:#009900;
+	height: 30px;
+	border: 1px solid;
+	width: 50px;
+
+}
